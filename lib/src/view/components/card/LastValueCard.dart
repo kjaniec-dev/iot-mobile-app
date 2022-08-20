@@ -42,7 +42,7 @@ class LastValueCard extends StatelessWidget {
       elevation: 8,
       child: Container(
         padding: const EdgeInsets.all(16),
-        width: 200,
+        width: 240,
         child: Column(children: [
           Container(
             padding: const EdgeInsets.only(bottom: 8),

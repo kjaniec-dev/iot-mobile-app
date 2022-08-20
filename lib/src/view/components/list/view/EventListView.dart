@@ -13,25 +13,35 @@ class EventListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       shrinkWrap: true,
+      physics: const ClampingScrollPhysics(),
       children: ListTile.divideTiles(
         context: context,
-        tiles: events.map((Event ev) {
-          final String dateTime =
-              DateTime.fromMillisecondsSinceEpoch(ev.lastValue.ts).toString();
-          final String eventType = ev.type;
-          final Icon leadingIcon =
-              _resolveLeadingIconBasedOnEventType(eventType);
-          final Icon trailingIcon =
-              _resolveTrailingIconBasedOnEventType(eventType);
-          return Material(
-              color: cardColor,
-              child: ListItem(
-                title: eventType,
-                leadingIcon: leadingIcon,
-                trailingIcon: trailingIcon,
-                secondaryText: dateTime,
-              ));
-        }).toList(),
+        tiles: events.length > 0
+            ? events.map((Event ev) {
+                final String dateTime =
+                    DateTime.fromMillisecondsSinceEpoch(ev.lastValue.ts)
+                        .toString();
+                final String eventType = ev.type;
+                final Icon leadingIcon =
+                    _resolveLeadingIconBasedOnEventType(eventType);
+                final Icon trailingIcon =
+                    _resolveTrailingIconBasedOnEventType(eventType);
+                return Material(
+                    color: cardColor,
+                    child: ListItem(
+                      title: eventType,
+                      leadingIcon: leadingIcon,
+                      trailingIcon: trailingIcon,
+                      secondaryText: dateTime,
+                    ));
+              }).toList()
+            : [
+                const Text(
+                  "None of events occur",
+                  textAlign: TextAlign.center,
+                  style: TextStyle( color: textPrimary, fontSize: 16,  ),
+                )
+              ],
       ).toList(),
     );
   }

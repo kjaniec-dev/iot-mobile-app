@@ -18,7 +18,7 @@ class IconWithText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: mainAxisAlignment,
-      children: [icon, sizedBox16, text],
+      children: [icon, sizedBox16, Flexible( child: text )],
     );
   }
 }

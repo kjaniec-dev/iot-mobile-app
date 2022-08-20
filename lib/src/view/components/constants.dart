@@ -39,7 +39,7 @@ const Icon humidityIcon = Icon(
   color: humidityAnalogousColor,
 );
 const Icon waterLevelIcon = Icon(
-  FontAwesomeIcons.houseFloodWater,
+  FontAwesomeIcons.faucet,
   color: waterLevelAnalogousColor,
 );
 const Icon heatIndexIcon = Icon(

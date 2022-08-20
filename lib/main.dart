@@ -5,6 +5,7 @@ import 'package:iot_mobile_app/src/env/EnvironmentVariables.dart';
 import 'package:iot_mobile_app/src/view/components/constants.dart';
 import 'package:iot_mobile_app/src/view/components/tabs/EventsTab.dart';
 import 'package:iot_mobile_app/src/view/components/tabs/LastValueTab.dart';
+import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 Future main() async {
@@ -57,10 +58,11 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  final WebSocketChannel channel = WebSocketChannel.connect(
+  final IOWebSocketChannel channel = IOWebSocketChannel.connect(
     Uri.parse(
       "${EnvironmentVariables.websocketProtocol}://${EnvironmentVariables.host}:${EnvironmentVariables.port}",
     ),
+    pingInterval: const Duration( seconds: 20 ),
   );
 
   @override

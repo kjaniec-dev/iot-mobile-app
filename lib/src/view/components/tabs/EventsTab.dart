@@ -25,8 +25,21 @@ class _EventsTabState extends State<EventsTab> {
   @override
   void initState() {
     super.initState();
-    getLatestEvents().then((value) => events = value);
-    getCurrentEvents().then((value) => currentEvents = value);
+
+    Future.wait([
+      getCurrentEvents(),
+      getLatestEvents()
+    ]).then((allEventLists) {
+      setState(() {
+        currentEvents = allEventLists[0];
+        events = allEventLists[1];
+      });
+    }).onError((error, stackTrace) {
+      const SnackBar snackBar = SnackBar(
+        content: const Text("Something went wrong when getting latest and current events"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    });
 
     _periodicTimer = Timer.periodic(const Duration(minutes: 1), (timer) async {
       final List<Event> latestEvents = await getLatestEvents();
@@ -47,45 +60,41 @@ class _EventsTabState extends State<EventsTab> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: SafeArea(
-        child: Column(
-          children: [
-            const ListHeader(
-              title: "Current events",
-              icon: currentEventsIcon,
-            ),
-            EventListView(events: currentEvents),
-            const ListHeader(
-              title: "Latest events",
-              icon: latestEventsIcon,
-            ),
-            EventListView(events: events.reversed.toList()),
-          ],
-        ),
+    return SafeArea(
+      child: Column(
+        children: [
+          const ListHeader(
+            title: "Current events",
+            icon: currentEventsIcon,
+          ),
+          EventListView(events: currentEvents),
+          const ListHeader(
+            title: "Latest events",
+            icon: latestEventsIcon,
+          ),
+         Expanded( child: EventListView(events: events),),
+        ],
       ),
     );
   }
 
   Future<List<Event>> getLatestEvents() async {
-    return eventsService
-        .getLatestEvents()
-        .then((value) => events = value)
-        .catchError(
-          () => const Snackbar(
-            text: "Something went wrong when getting lastest events",
-          ),
-        );
+    return eventsService.getLatestEvents().onError((error, stackTrace) {
+      const SnackBar snackBar = SnackBar(
+        content: const Text("Something went wrong when getting latest events"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return [];
+    });
   }
 
   Future<List<Event>> getCurrentEvents() async {
-    return eventsService
-        .getCurrentEvents()
-        .then((value) => currentEvents = value)
-        .catchError(
-          () => const Snackbar(
-            text: "Something went wrong when getting lastest events",
-          ),
-        );
+    return eventsService.getCurrentEvents().onError((error, stackTrace) {
+      const SnackBar snackBar = SnackBar(
+        content: const Text("Something went wrong when getting current events"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return [];
+    });
   }
 }

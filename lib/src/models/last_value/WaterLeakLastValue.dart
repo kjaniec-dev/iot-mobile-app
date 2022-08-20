@@ -16,16 +16,16 @@ class WaterLeakLastValue extends LastValue {
                 : DateTime.now().millisecondsSinceEpoch,
             "waterLeakDetection") {
     if (json.containsKey("waterLevel")) {
-      waterLevel = json["waterLevel"];
+      waterLevel = json["waterLevel"] + .0;
     }
     if (json.containsKey("temperature")) {
-      temperature = json["temperature"];
+      temperature = json["temperature"] + .0;
     }
     if (json.containsKey("humidity")) {
-      humidity = json["humidity"];
+      humidity = json["humidity"] + .0;
     }
     if (json.containsKey("heatIndex")) {
-      heatIndex = json["heatIndex"];
+      heatIndex = json["heatIndex"] +.0;
     }
   }
 
