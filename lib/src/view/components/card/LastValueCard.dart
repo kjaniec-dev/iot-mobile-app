@@ -132,15 +132,15 @@ class LastValueCard extends StatelessWidget {
         );
       case LastValueKey.waterLevel:
         return LastValueCardContent(
-            title: "Water level",
-            value: lastValueProperty.value,
-            backgroundColor: waterLevelColor,
-            icon: Icon(
-              waterLevelIcon.icon,
-              size: 48,
-              color: waterLevelIcon.color,
-            ),
-            adornment: "mm");
+          title: "Water level",
+          value: lastValueProperty.value,
+          backgroundColor: waterLevelColor,
+          icon: Icon(
+            waterLevelIcon.icon,
+            size: 48,
+            color: waterLevelIcon.color,
+          ),
+        );
       default:
         return LastValueCardContent(
           title: "Unknown",

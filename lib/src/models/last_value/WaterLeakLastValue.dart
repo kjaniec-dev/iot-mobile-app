@@ -4,10 +4,10 @@ import 'package:iot_mobile_app/src/models/last_value/LastValueProperty.dart';
 import 'LastValuePropertyKey.dart';
 
 class WaterLeakLastValue extends LastValue {
-  double? waterLevel;
-  double? temperature;
-  double? humidity;
-  double? heatIndex;
+  int? waterLevel;
+  int? temperature;
+  int? humidity;
+  int? heatIndex;
 
   WaterLeakLastValue(final Map<String, dynamic> json)
       : super(
@@ -16,16 +16,16 @@ class WaterLeakLastValue extends LastValue {
                 : DateTime.now().millisecondsSinceEpoch,
             "waterLeakDetection") {
     if (json.containsKey("waterLevel")) {
-      waterLevel = json["waterLevel"] + .0;
+      waterLevel = json["waterLevel"];
     }
     if (json.containsKey("temperature")) {
-      temperature = json["temperature"] + .0;
+      temperature = json["temperature"];
     }
     if (json.containsKey("humidity")) {
-      humidity = json["humidity"] + .0;
+      humidity = json["humidity"];
     }
     if (json.containsKey("heatIndex")) {
-      heatIndex = json["heatIndex"] +.0;
+      heatIndex = json["heatIndex"];
     }
   }
 
